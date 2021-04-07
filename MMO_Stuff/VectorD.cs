@@ -53,6 +53,16 @@ namespace MMO_Stuff
             set { Coords[index] = value; }
         }
 
+        public override string ToString()
+        {
+            return "(" + string.Join(", ", Coords) + ")";
+        }
+
+        public object Clone()
+        {
+            return new VectorD((double[])Coords.Clone());
+        }
+
         public static VectorD operator +(VectorD lhs, VectorD rhs)
         {
             if (lhs.N != rhs.N)
@@ -83,6 +93,16 @@ namespace MMO_Stuff
             return new VectorD(coords);
         }
 
+        public static VectorD operator -(VectorD vec)
+        {
+            double[] coords = (double[])vec.Coords.Clone();
+            for (int i = 0; i < coords.Length; i++)
+            {
+                coords[i] = -coords[i];
+            }
+            return new VectorD(coords);
+        }
+
         public static VectorD operator *(VectorD lhs, double rhs)
         {
             double[] coords = new double[lhs.N];
@@ -103,24 +123,5 @@ namespace MMO_Stuff
             return new VectorD(coords);
         }
 
-        public override string ToString()
-        {
-            return "(" + string.Join(", ", Coords) + ")";
-        }
-
-        public object Clone()
-        {
-            return new VectorD((double[])Coords.Clone());
-        }
-
-        public static VectorD operator -(VectorD vec)
-        {
-            double[] coords = vec.Coords;
-            for (int i = 0; i < coords.Length; i++)
-            {
-                coords[i] = -coords[i];
-            }
-            return new VectorD(coords);
-        }
     }
 }

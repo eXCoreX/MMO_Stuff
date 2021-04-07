@@ -55,6 +55,10 @@ namespace MMO_Stuff
             {
                 eps = -eps;
             }
+            if (eps < 1e-10)
+            {
+                throw new ArgumentException("Precision is too high");
+            }
             double delta = eps / 3;
             do
             {
@@ -85,6 +89,10 @@ namespace MMO_Stuff
             if (eps < 0)
             {
                 eps = -eps;
+            }
+            if (eps < 1e-10)
+            {
+                throw new ArgumentException("Precision is too high");
             }
             double u = ((double)(a + (3 - Math.Sqrt(5)) / 2 * (b - a)));
             double v = a + b - u;

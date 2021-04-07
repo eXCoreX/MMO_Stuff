@@ -117,5 +117,24 @@ namespace MMO_Stuff.Tests
             }
             Assert.Equal(expected.F, actual.F, 7);
         }
+
+        [Fact]
+        public void Test3DParaboloidAt1_1_1Auto()
+        {
+            var actual = DimensionalOptimization.GetMinimumWithGradient(x =>
+            {
+                return 1 + (x[0] - 1) * (x[0] - 1) + (x[1] - 1) * (x[1] - 1);
+            }, x =>
+            {
+                double[] coords = { 2 * (x[0] - 1), 2 * (x[1] - 1) };
+                return new VectorD(coords);
+            }, 2);
+            var expected = (X: new VectorD(2, 1), F: 1);
+            for (int i = 0; i < actual.X.N; i++)
+            {
+                Assert.Equal(expected.X[i], actual.X[i], 7);
+            }
+            Assert.Equal(expected.F, actual.F, 7);
+        }
     }
 }

@@ -154,7 +154,7 @@ namespace MMO_Stuff
             }
         }
 
-        private static (VectorD X, double F) GetMinimumCoordinateDescent(Func<VectorD, double> func, int dimensions, double lambda, double eps)
+        public static (VectorD X, double F) GetMinimumCoordinateDescent(Func<VectorD, double> func, int dimensions, double lambda, double eps)
         {
             if (eps < 0)
             {

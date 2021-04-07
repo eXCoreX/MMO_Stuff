@@ -1,23 +1,8 @@
 using System;
 using Xunit;
-using MMO_Stuff;
-using System.Drawing;
-
-namespace AssertExtensions
-{
-    public static class EqualExtension
-    {
-        public static void Equal(this string assert, VectorD expected, VectorD actual, int precision)
-        {
-
-        }
-    }
-}
 
 namespace MMO_Stuff.Tests
 {
-    using AssertExtensions;
-    using static AssertExtensions.EqualExtension;
     public class UnitTestMMO
     {
         [Fact]
@@ -130,6 +115,44 @@ namespace MMO_Stuff.Tests
                 return new VectorD(coords);
             }, 2);
             var expected = (X: new VectorD(2, 1), F: 1);
+            for (int i = 0; i < actual.X.N; i++)
+            {
+                Assert.Equal(expected.X[i], actual.X[i], 7);
+            }
+            Assert.Equal(expected.F, actual.F, 7);
+        }
+
+        [Fact]
+        public void Test3DParaboloidAt1_1_1StepDivision()
+        {
+            var actual = DimensionalOptimization.GetMinimumWithGradient(x =>
+            {
+                return 1 + (x[0] - 1) * (x[0] - 1) + (x[1] - 1) * (x[1] - 1);
+            }, x =>
+            {
+                double[] coords = { 2 * (x[0] - 1), 2 * (x[1] - 1) };
+                return new VectorD(coords);
+            }, 2, 1e-7, DimensionalOptimization.GradientMethod.StepDivision);
+            var expected = (X: new VectorD(2, 1), F: 1);
+            for (int i = 0; i < actual.X.N; i++)
+            {
+                Assert.Equal(expected.X[i], actual.X[i], 7);
+            }
+            Assert.Equal(expected.F, actual.F, 7);
+        }
+
+        [Fact]
+        public void Test3DParaboloidAt3_m1_2StepDivision()
+        {
+            var actual = DimensionalOptimization.GetMinimumWithGradient(x =>
+            {
+                return 2 + (x[0] - 3) * (x[0] - 3) + (x[1] + 1) * (x[1] + 1);
+            }, x =>
+            {
+                double[] coords = { 2 * (x[0] - 3), 2 * (x[1] + 1) };
+                return new VectorD(coords);
+            }, 2, 1e-7, DimensionalOptimization.GradientMethod.StepDivision);
+            var expected = (X: new VectorD(new double[] { 3, -1 }), F: 2);
             for (int i = 0; i < actual.X.N; i++)
             {
                 Assert.Equal(expected.X[i], actual.X[i], 7);

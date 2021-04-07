@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MMO_Stuff
 {
-    public class VectorD
+    public class VectorD : ICloneable
     {
         public VectorD(int n, double initVal = 0)
         {
@@ -106,6 +106,11 @@ namespace MMO_Stuff
         public override string ToString()
         {
             return "(" + string.Join(", ", Coords) + ")";
+        }
+
+        public object Clone()
+        {
+            return new VectorD((double[])Coords.Clone());
         }
 
         public static VectorD operator -(VectorD vec)

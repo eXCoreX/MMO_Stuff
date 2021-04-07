@@ -31,6 +31,14 @@ namespace MMO_Stuff
             return obj is PointD && this.Equals(other);
         }
 
+        public double Norm
+        {
+            get
+            {
+                return Math.Sqrt(X * X + Y * Y);
+            }
+        }
+
         public override int GetHashCode()
         {
             return X.GetHashCode() ^ (Y.GetHashCode() * 7);
@@ -48,6 +56,16 @@ namespace MMO_Stuff
         public static bool operator !=(PointD lhs, PointD rhs)
         {
             return !lhs.Equals(rhs);
+        }
+
+        public static PointD operator +(PointD lhs, PointD rhs)
+        {
+            return new PointD(lhs.X + rhs.X, lhs.Y + rhs.Y);
+        }
+
+        public static PointD operator -(PointD lhs, PointD rhs)
+        {
+            return new PointD(lhs.X - rhs.X, lhs.Y - rhs.Y);
         }
     }
 }

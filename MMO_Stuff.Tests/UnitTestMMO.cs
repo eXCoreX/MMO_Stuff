@@ -174,5 +174,25 @@ namespace MMO_Stuff.Tests
             }
             Assert.Equal(expected.F, actual.F, 7);
         }
+
+        [Theory]
+        [InlineData(-1, -2, -1, 3)]
+        [InlineData(0, 1, 3, 1)]
+        [InlineData(0, 0, 0, 0)]
+        [InlineData(-1.4, 1.1, 0, -20.2)]
+        [InlineData(2, 1.41, 3, 11.1)]
+        public void Test4DParaboloidWithoutGradient(double x1, double x2, double x3, double y)
+        {
+            var actual = DimensionalOptimization.GetMinimum(x =>
+            {
+                return y + (x[0] - x1) * (x[0] - x1) + (x[1] - x2) * (x[1] - x2) + (x[2] - x3) * (x[2] - x3);
+            }, 3);
+            var expected = (X: new VectorD(new double[] { x1, x2, x3 }), F: y);
+            for (int i = 0; i < actual.X.N; i++)
+            {
+                Assert.Equal(expected.X[i], actual.X[i], 7);
+            }
+            Assert.Equal(expected.F, actual.F, 7);
+        }
     }
 }

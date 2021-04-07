@@ -6,7 +6,7 @@ namespace MMO_Stuff
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello world!");
             Random rnd = new Random();
             long cnt = 0;
             for (int i = 0; i < 1000000; i++)

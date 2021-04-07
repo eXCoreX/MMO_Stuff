@@ -131,10 +131,10 @@ namespace MMO_Stuff
         #region Non Gradient Methods
 
         /// <summary>
-        /// Get minimum of unimodal function func using given gradient function
+        /// Get minimum of unimodal function func without gradient function
         /// </summary>
         /// <param name="func"> Unimodal function </param>
-        /// <param name="dimensions"> Number of dimensions in argument </param>
+        /// <param name="dimensions"> Number of dimensions in the argument </param>
         /// <param name="precision"> Epsilon for fp methods </param>
         /// <param name="method"> Method of computing minumum </param>
         /// <returns> VectorD of argument coordinates and value of func at this point </returns>

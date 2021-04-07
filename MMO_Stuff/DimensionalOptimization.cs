@@ -18,6 +18,15 @@ namespace MMO_Stuff
             CoordinateDescent = 0
         }
 
+        /// <summary>
+        /// Get minimum of unimodal function func using given gradient function
+        /// </summary>
+        /// <param name="func"> Unimodal function </param>
+        /// <param name="gradient"> Gradient function of func </param>
+        /// <param name="dimensions"> Number of dimensions in argument </param>
+        /// <param name="precision"> Epsilon for fp methods </param>
+        /// <param name="method"> Method of computing minumum </param>
+        /// <returns></returns>
         public static (VectorD X, double F) GetMinimumWithGradient(Func<VectorD, double> func, Func<VectorD, VectorD> gradient, int dimensions, double precision = 1e-7, GradientMethod method = GradientMethod.FastDescent)
         {
             if (precision < 1e-10)
@@ -82,6 +91,10 @@ namespace MMO_Stuff
             if (eps < 1e-10)
             {
                 throw new ArgumentException("Precision is too high");
+            }
+            if (lambda <= 0 || lambda >= 1)
+            {
+                throw new ArgumentException("lambda should be in range (0, 1)");
             }
             VectorD x0 = new VectorD(dimensions);
 

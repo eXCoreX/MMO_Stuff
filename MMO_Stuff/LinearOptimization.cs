@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
 
 namespace MMO_Stuff
 {
@@ -11,38 +8,60 @@ namespace MMO_Stuff
         {
             Dichotomy = 0,
             GoldenRatio,
-            Fibonacci,
-            Parabolic
+            //Fibonacci,
+            //Parabolic
         }
-        public static PointF GetMinimum(Func<float, float> func, float eps = 1e-6f, LinearMethod method = LinearMethod.Dichotomy)
+
+        /// <summary>
+        /// Get minimum of given unimodal function. If function is not unimodal or doesn't have global minimum, behaviour is unexpected.
+        /// </summary>
+        /// <param name="func"> Unimodal Function</param>
+        /// <param name="precision"> Epsilon for fp methods </param>
+        /// <param name="method"> Method of computing minimum </param>
+        /// <returns> Minimum of the function </returns>
+        public static PointD GetMinimum(Func<double, double> func, double precision = 1e-7, LinearMethod method = LinearMethod.Dichotomy)
         {
-            (float a, float b) = LocalizeMinimum(func, eps);
+            if (precision < 1e-10)
+            {
+                throw new ArgumentException("Precision is too high");
+            }
+            (double a, double b) = LocalizeMinimum(func, 1e-10);
             if (a == b)
             {
-                return new PointF(a, func(a));
+                return new PointD(a, func(a));
             }
             else
             {
                 return method switch
                 {
-                    LinearMethod.Dichotomy => GetMinimumDichotomy(func, a, b, eps),
-                    LinearMethod.GoldenRatio => GetMinimumGoldenRatio(func, a, b, eps),
-                    LinearMethod.Fibonacci => GetMinimumFibonacci(func, a, b, eps),
-                    LinearMethod.Parabolic => GetMinimumParabolic(func, a, b, eps),
+                    LinearMethod.Dichotomy => GetMinimumDichotomy(func, a, b, precision),
+                    LinearMethod.GoldenRatio => GetMinimumGoldenRatio(func, a, b, precision),
+                    //LinearMethod.Fibonacci => GetMinimumFibonacci(func, a, b, (int)precision),
+                    //LinearMethod.Parabolic => GetMinimumParabolic(func, a, b, eps),
                     _ => throw new ArgumentException("Not valid method"),
                 };
             }
         }
 
-        public static PointF GetMinimumDichotomy(Func<float, float> func, float a, float b, float eps)
+        public static PointD GetMinimumDichotomy(Func<double, double> func, double a, double b, double eps)
         {
-            float delta = eps / 3;
+            if (a > b)
+            {
+                double t = a;
+                a = b;
+                b = t;
+            }
+            if (eps < 0)
+            {
+                eps = -eps;
+            }
+            double delta = eps / 3;
             do
             {
-                float x1 = (a + b - delta) / 2;
-                float x2 = (a + b + delta) / 2;
-                float f1 = func(x1);
-                float f2 = func(x2);
+                double x1 = (a + b - delta) / 2;
+                double x2 = (a + b + delta) / 2;
+                double f1 = func(x1);
+                double f2 = func(x2);
                 if (f1 <= f2)
                 {
                     b = x2;
@@ -52,15 +71,25 @@ namespace MMO_Stuff
                     a = x1;
                 }
             } while (b - a >= eps);
-            return new PointF((a + b) / 2, func((a + b) / 2));
+            return new PointD((a + b) / 2, func((a + b) / 2));
         }
 
-        public static PointF GetMinimumGoldenRatio(Func<float, float> func, float a, float b, float eps)
+        public static PointD GetMinimumGoldenRatio(Func<double, double> func, double a, double b, double eps)
         {
-            float u = (a + (3 - MathF.Sqrt(5)) / 2 * (b - a));
-            float v = a + b - u;
-            float fu = func(u);
-            float fv = func(v);
+            if (a > b)
+            {
+                double t = a;
+                a = b;
+                b = t;
+            }
+            if (eps < 0)
+            {
+                eps = -eps;
+            }
+            double u = ((double)(a + (3 - Math.Sqrt(5)) / 2 * (b - a)));
+            double v = a + b - u;
+            double fu = func(u);
+            double fv = func(v);
             do
             {
                 if (fu <= fv)
@@ -82,30 +111,31 @@ namespace MMO_Stuff
 
                 if (u > v)
                 {
-                    u = a + (3 - MathF.Sqrt(5)) / 2 * (b - a);
+                    u = (double)(a + (3 - Math.Sqrt(5)) / 2 * (b - a));
                     v = a + b - u;
                     fu = func(u);
                     fv = func(v);
                 }
             } while (b - a >= eps);
 
-            return new PointF((a + b) / 2, func((a + b) / 2));
+            return new PointD((a + b) / 2, func((a + b) / 2));
         }
-        public static PointF GetMinimumFibonacci(Func<float, float> func, float a, float b, float eps)
+
+        private static PointD GetMinimumFibonacci(Func<double, double> func, double a, double b, int n)
         {
             throw new NotImplementedException();
         }
 
-        public static PointF GetMinimumParabolic(Func<float, float> func, float a, float b, float eps)
+        private static PointD GetMinimumParabolic(Func<double, double> func, double a, double b, double eps)
         {
             throw new NotImplementedException();
         }
 
-        public static (float a, float b) LocalizeMinimum(Func<float, float> func, float eps)
+        public static (double a, double b) LocalizeMinimum(Func<double, double> func, double eps)
         {
-            float x1 = 0f, x2;
-            float h = 1e6f;
-            float f1 = func(x1), f2;
+            double x1 = 0, x2;
+            double h = 1e6;
+            double f1 = func(x1), f2;
             do
             {
                 h /= 2;

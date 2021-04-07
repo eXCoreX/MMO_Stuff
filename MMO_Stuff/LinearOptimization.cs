@@ -25,10 +25,10 @@ namespace MMO_Stuff
             {
                 return method switch
                 {
-                    LinearMethod.Dichotomy      => GetMinimumDichotomy(func, a, b, eps),
-                    LinearMethod.GoldenRatio    => GetMinimumGoldenRatio(func, a, b, eps),
-                    LinearMethod.Fibonacci      => GetMinimumFibonacci(func, a, b, eps),
-                    LinearMethod.Parabolic      => GetMinimumParabolic(func, a, b, eps),
+                    LinearMethod.Dichotomy => GetMinimumDichotomy(func, a, b, eps),
+                    LinearMethod.GoldenRatio => GetMinimumGoldenRatio(func, a, b, eps),
+                    LinearMethod.Fibonacci => GetMinimumFibonacci(func, a, b, eps),
+                    LinearMethod.Parabolic => GetMinimumParabolic(func, a, b, eps),
                     _ => throw new ArgumentException("Not valid method"),
                 };
             }

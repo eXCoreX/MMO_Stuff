@@ -174,11 +174,11 @@ namespace MMO_Stuff
                 x_ext = (VectorD)x_int.Clone();
                 for (int i = 0; i < dimensions; i++)
                 {
-                    VectorD x = (VectorD)x_int.Clone();
-                    double fx = func(x);
-                    VectorD y1 = (VectorD)x.Clone();
+                    double xi = x_int[i];
+                    double fx = func(x_int);
+                    VectorD y1 = (VectorD)x_int.Clone();
                     y1[i] += 3 * eps;
-                    VectorD y2 = (VectorD)x.Clone();
+                    VectorD y2 = (VectorD)x_int.Clone();
                     y2[i] -= 3 * eps;
                     double f1 = func(y1);
                     double f2 = func(y2);
@@ -186,7 +186,7 @@ namespace MMO_Stuff
                     double fx1;
                     do
                     {
-                        x_int[i] = x[i] + h[i] * sign;
+                        x_int[i] = xi + h[i] * sign;
                         fx1 = func(x_int);
                         if (fx1 >= fx)
                         {

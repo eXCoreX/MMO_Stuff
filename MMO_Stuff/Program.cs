@@ -6,28 +6,87 @@ namespace MMO_Stuff
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello world!");
-            Random rnd = new Random();
-            long cnt = 0;
-            for (int i = 0; i < 100000; i++)
-            {
-                int randInt1 = rnd.Next(-100, 100);
-                int randInt2 = rnd.Next(-100, 100);
-                int randInt3 = rnd.Next(-100, 100);
-                int randInt4 = rnd.Next(-100, 100);
-                var actual = DimensionalOptimization.GetMinimum(
-                    x => 
-                    { 
-                        cnt++; 
-                        return randInt4 + Math.Pow(x[0] - randInt1, 2) + Math.Pow(x[1] - randInt2, 2) + Math.Pow(x[2] - randInt3, 2); 
-                    }, 3, 1e-7);
-                var expected = (X: new VectorD(new double[] { randInt1, randInt2, randInt3 }), F: randInt4);
-                if ((actual.X - expected.X).Norm > 1e-6)
+            TestRosenbrock(1e-4);
+            TestRosenbrock(1e-8);
+            TestIndividual(1e-4);
+            TestIndividual(1e-8);
+        }
+
+        static void TestRosenbrock(double eps)
+        {
+            var result = DimensionalOptimization.GetMinimumWithGradient(
+                x =>
                 {
-                    Console.WriteLine($"Fail {randInt1} {randInt2} {randInt3} {randInt4}");
-                }
-            }
-            Console.WriteLine(cnt);
+                    return 100 * (x[1] - x[0] * x[0]) * (x[1] - x[0] * x[0]) + (1 - x[0]) * (1 - x[0]);
+                },
+                x =>
+                {
+                    double[] coords = new double[]
+                    {
+                        2.0 * x[0] - 2.0 - 400.0 * x[0] * (x[1] - x[0] * x[0]),
+                        200.0 * (x[1] - x[0] * x[0])
+                    };
+                    return new VectorD(coords);
+                },
+                2, null, eps, DimensionalOptimization.GradientMethod.FastDescent);
+
+            Console.WriteLine($"rosenbrock fast descent, eps = {eps}, result:\n{result}");
+        }
+
+        static void TestIndividual(double eps)
+        {
+            var initialPoint = new VectorD(new[] { 1.0, 1.0 });
+
+            int functionCalls = 0;
+
+            Func<VectorD, double> func = x =>
+            {
+                functionCalls++;
+                return x[0] * x[0] - 2 * x[0] * x[1] + 3 * x[1] * x[1] + x[0] - 4 * x[1];
+            };
+
+            Func<VectorD, VectorD> gradientFunc = x =>
+            {
+                double[] coords = new double[]
+                {
+                        2.0 * x[0] - 2.0 * x[1] + 1.0,
+                        6.0 * x[1] - 2.0 * x[0] - 4.0
+                };
+                return new VectorD(coords);
+            };
+
+            var resultStep = DimensionalOptimization.GetMinimumWithGradient(
+                func,
+                gradientFunc,
+                2,
+                initialPoint,
+                eps,
+                DimensionalOptimization.GradientMethod.StepDivision);
+
+            Console.WriteLine($"individual, step division, eps = {eps}, result:\n{resultStep}, functionCalls: {functionCalls}");
+
+            functionCalls = 0;
+
+            var resultFast = DimensionalOptimization.GetMinimumWithGradient(
+                func,
+                gradientFunc,
+                2,
+                initialPoint,
+                eps,
+                DimensionalOptimization.GradientMethod.FastDescent);
+
+            Console.WriteLine($"individual, fast descent, eps = {eps}, result:\n{resultFast}, functionCalls: {functionCalls}");
+
+            functionCalls = 0;
+
+            var resultCoord = DimensionalOptimization.GetMinimum(
+                func,
+                2,
+                initialPoint,
+                eps,
+                DimensionalOptimization.NonGradientMethod.CoordinateDescent);
+
+            Console.WriteLine($"individual, coordinate descent, eps = {eps}, result:\n{resultCoord}, functionCalls: {functionCalls}");
         }
     }
 }

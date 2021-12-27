@@ -45,8 +45,8 @@ namespace MMO_Stuff.Tests
 
             var expected = new PointD(0, 0);
 
-            Assert.Equal(expected.X, actual.X, 7);
-            Assert.Equal(expected.Y, actual.Y, 7);
+            Assert.Equal(expected.X, actual.X, 6);
+            Assert.Equal(expected.Y, actual.Y, 6);
         }
 
         [Fact]
@@ -56,8 +56,8 @@ namespace MMO_Stuff.Tests
 
             var expected = new PointD(1, 0);
 
-            Assert.Equal(expected.X, actual.X, 7);
-            Assert.Equal(expected.Y, actual.Y, 7);
+            Assert.Equal(expected.X, actual.X, 6);
+            Assert.Equal(expected.Y, actual.Y, 6);
         }
 
         [Fact]
@@ -67,8 +67,8 @@ namespace MMO_Stuff.Tests
 
             var expected = new PointD(1, 1);
 
-            Assert.Equal(expected.X, actual.X, 7);
-            Assert.Equal(expected.Y, actual.Y, 7);
+            Assert.Equal(expected.X, actual.X, 6);
+            Assert.Equal(expected.Y, actual.Y, 6);
         }
 
         [Fact]
@@ -79,8 +79,8 @@ namespace MMO_Stuff.Tests
 
             var expected = new PointD(-5, -2.5);
 
-            Assert.Equal(expected.X, actual.X, 7);
-            Assert.Equal(expected.Y, actual.Y, 7);
+            Assert.Equal(expected.X, actual.X, 6);
+            Assert.Equal(expected.Y, actual.Y, 6);
         }
 
         [Fact]
@@ -91,8 +91,8 @@ namespace MMO_Stuff.Tests
 
             var expected = new PointD(5, -0.5);
 
-            Assert.Equal(expected.X, actual.X, 7);
-            Assert.Equal(expected.Y, actual.Y, 7);
+            Assert.Equal(expected.X, actual.X, 6);
+            Assert.Equal(expected.Y, actual.Y, 6);
         }
 
         [Fact]
@@ -111,9 +111,9 @@ namespace MMO_Stuff.Tests
 
             for (int i = 0; i < actual.X.N; i++)
             {
-                Assert.Equal(expected.X[i], actual.X[i], 7);
+                Assert.Equal(expected.X[i], actual.X[i], 6);
             }
-            Assert.Equal(expected.F, actual.F, 7);
+            Assert.Equal(expected.F, actual.F, 6);
         }
 
         [Fact]
@@ -132,9 +132,9 @@ namespace MMO_Stuff.Tests
 
             for (int i = 0; i < actual.X.N; i++)
             {
-                Assert.Equal(expected.X[i], actual.X[i], 7);
+                Assert.Equal(expected.X[i], actual.X[i], 6);
             }
-            Assert.Equal(expected.F, actual.F, 7);
+            Assert.Equal(expected.F, actual.F, 6);
         }
 
         [Fact]
@@ -153,9 +153,9 @@ namespace MMO_Stuff.Tests
 
             for (int i = 0; i < actual.X.N; i++)
             {
-                Assert.Equal(expected.X[i], actual.X[i], 7);
+                Assert.Equal(expected.X[i], actual.X[i], 6);
             }
-            Assert.Equal(expected.F, actual.F, 7);
+            Assert.Equal(expected.F, actual.F, 6);
         }
 
         [Fact]
@@ -168,15 +168,15 @@ namespace MMO_Stuff.Tests
             {
                 double[] coords = { 2 * (x[0] - 1), 2 * (x[1] - 1) };
                 return new VectorD(coords);
-            }, 2, 1e-7, DimensionalOptimization.GradientMethod.StepDivision);
+            }, 2, null, 1e-7, DimensionalOptimization.GradientMethod.StepDivision);
 
             var expected = (X: new VectorD(2, 1), F: 1);
 
             for (int i = 0; i < actual.X.N; i++)
             {
-                Assert.Equal(expected.X[i], actual.X[i], 7);
+                Assert.Equal(expected.X[i], actual.X[i], 6);
             }
-            Assert.Equal(expected.F, actual.F, 7);
+            Assert.Equal(expected.F, actual.F, 6);
         }
 
         [Fact]
@@ -189,15 +189,15 @@ namespace MMO_Stuff.Tests
             {
                 double[] coords = { 2 * (x[0] - 3), 2 * (x[1] + 1) };
                 return new VectorD(coords);
-            }, 2, 1e-7, DimensionalOptimization.GradientMethod.StepDivision);
+            }, 2, null, 1e-7, DimensionalOptimization.GradientMethod.StepDivision);
 
             var expected = (X: new VectorD(new double[] { 3, -1 }), F: 2);
 
             for (int i = 0; i < actual.X.N; i++)
             {
-                Assert.Equal(expected.X[i], actual.X[i], 7);
+                Assert.Equal(expected.X[i], actual.X[i], 6);
             }
-            Assert.Equal(expected.F, actual.F, 7);
+            Assert.Equal(expected.F, actual.F, 6);
         }
 
         [Fact]
@@ -212,9 +212,9 @@ namespace MMO_Stuff.Tests
 
             for (int i = 0; i < actual.X.N; i++)
             {
-                Assert.Equal(expected.X[i], actual.X[i], 7);
+                Assert.Equal(expected.X[i], actual.X[i], 6);
             }
-            Assert.Equal(expected.F, actual.F, 7);
+            Assert.Equal(expected.F, actual.F, 6);
         }
 
         [Theory]
@@ -234,9 +234,9 @@ namespace MMO_Stuff.Tests
 
             for (int i = 0; i < actual.X.N; i++)
             {
-                Assert.Equal(expected.X[i], actual.X[i], 7);
+                Assert.Equal(expected.X[i], actual.X[i], 6);
             }
-            Assert.Equal(expected.F, actual.F, 7);
+            Assert.Equal(expected.F, actual.F, 6);
         }
 
         [Theory]
@@ -256,9 +256,9 @@ namespace MMO_Stuff.Tests
 
             for (int i = 0; i < actual.X.N; i++)
             {
-                Assert.Equal(expected.X[i], actual.X[i], 7);
+                Assert.Equal(expected.X[i], actual.X[i], 6);
             }
-            Assert.Equal(expected.F, actual.F, 7);
+            Assert.Equal(expected.F, actual.F, 6);
         }
     }
 
@@ -275,20 +275,20 @@ namespace MMO_Stuff.Tests
         [Fact]
         public void TestTooHighDimensionalPrecisionException()
         {
-            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumWithGradient(x => x[0], x => x, 1, 9e-11));
-            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumFastDescent(x => x[0], x => x, 1, 9e-11));
-            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumStepDivision(x => x[0], x => x, 1, 0.5, 9e-11));
-            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimum(x => x[0], 1, 9e-11));
-            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumCoordinateDescent(x => x[0], 1, 0.5, 9e-11));
+            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumWithGradient(x => x[0], x => x, 1, null, 9e-11));
+            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumFastDescent(x => x[0], x => x, 1, null, 9e-11));
+            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumStepDivision(x => x[0], x => x, 1, null, 0.5, 9e-11));
+            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimum(x => x[0], 1, null, 9e-11));
+            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumCoordinateDescent(x => x[0], 1, null, 0.5, 9e-11));
         }
 
         [Fact]
         public void TestBadLambdaException()
         {
-            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumStepDivision(x => x[0], x => x, 1, -1, 9e-11));
-            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumStepDivision(x => x[0], x => x, 1, 1, 9e-11));
-            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumCoordinateDescent(x => x[0], 1, -1, 9e-11));
-            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumCoordinateDescent(x => x[0], 1, 1, 9e-11));
+            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumStepDivision(x => x[0], x => x, 1, null, -1, 9e-11));
+            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumStepDivision(x => x[0], x => x, 1, null, 1, 9e-11));
+            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumCoordinateDescent(x => x[0], 1, null, -1, 9e-11));
+            Assert.ThrowsAny<Exception>(() => DimensionalOptimization.GetMinimumCoordinateDescent(x => x[0], 1, null, 1, 9e-11));
         }
     }
 }

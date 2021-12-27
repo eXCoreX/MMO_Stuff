@@ -9,5 +9,5 @@
 ### Non-gradient methods:
 - Coordinate descent
 
-## Requiremnts:
-- .NET Core 3.1
+## Requirements:
+- .NET 6

@@ -131,7 +131,54 @@ namespace MMO_Stuff
 
         private static PointD GetMinimumFibonacci(Func<double, double> func, double a, double b, int n)
         {
-            throw new NotImplementedException();
+            throw new Exception();
+            if (a > b)
+            {
+                double t = a;
+                a = b;
+                b = t;
+            }
+            if (n < 0)
+            {
+                throw new Exception();
+            }
+            if (n > 85)
+            {
+                throw new ArgumentException("Precision is too high");
+            }
+            double u = ((double)(a + (3 - Math.Sqrt(5)) / 2 * (b - a)));
+            double v = a + b - u;
+            double fu = func(u);
+            double fv = func(v);
+            do
+            {
+                if (fu <= fv)
+                {
+                    b = v;
+                    v = u;
+                    fv = fu;
+                    u = a + b - v;
+                    fu = func(u);
+                }
+                else
+                {
+                    a = u;
+                    u = v;
+                    fu = fv;
+                    v = a + b - u;
+                    fv = func(v);
+                }
+
+                if (u > v)
+                {
+                    u = (double)(a + (3 - Math.Sqrt(5)) / 2 * (b - a));
+                    v = a + b - u;
+                    fu = func(u);
+                    fv = func(v);
+                }
+            } while (b - a >= n);
+
+            return new PointD((a + b) / 2, func((a + b) / 2));
         }
 
         private static PointD GetMinimumParabolic(Func<double, double> func, double a, double b, double eps)
@@ -142,7 +189,7 @@ namespace MMO_Stuff
         public static (double a, double b) LocalizeMinimum(Func<double, double> func, double eps)
         {
             double x1 = 0, x2;
-            double h = 1e6;
+            double h = 1;
             double f1 = func(x1), f2;
             do
             {
